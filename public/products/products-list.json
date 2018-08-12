@@ -3,73 +3,133 @@
     "ProductID": "1",
     "ProductTitle": "Витамин 1",
     "ProductPrice": "25",
-    "ProductImage": "images/vitamin1.jpg"
+    "ProductImage": "images/vitamin1.jpg",
+    "ProductDescription":"desc1",
+    "ProductYearlyDosage":"1000",
+    "ProductSideEffects":"нет",
+    "ProductAdditionalInfo":"none",
+    "ProductPillsCount":"100"
   },
   {
     "ProductID": "2",
     "ProductTitle": "Витамин 2",
     "ProductPrice": "35",
-    "ProductImage": "images/vitamin1.jpg"
+    "ProductImage": "images/vitamin1.jpg",
+    "ProductDescription":"desc2",
+    "ProductYearlyDosage":"1100",
+    "ProductSideEffects":"нет",
+    "ProductAdditionalInfo":"none",
+    "ProductPillsCount":"150"
   },
   {
     "ProductID": "3",
     "ProductTitle": "Витамин 3",
     "ProductPrice": "15.25",
-    "ProductImage": "images/vitamin1.jpg"
+    "ProductImage": "images/vitamin1.jpg",
+    "ProductDescription":"desc3",
+    "ProductYearlyDosage":"1200",
+    "ProductSideEffects":"нет",
+    "ProductAdditionalInfo":"none",
+    "ProductPillsCount":"130"
   },
   {
     "ProductID": "4",
     "ProductTitle": "Витамин 4",
     "ProductPrice": "35",
-    "ProductImage": "images/vitamin1.jpg"
+    "ProductImage": "images/vitamin1.jpg",
+    "ProductDescription":"desc4",
+    "ProductYearlyDosage":"1300",
+    "ProductSideEffects":"нет",
+    "ProductAdditionalInfo":"none",
+    "ProductPillsCount":"265"
   },
   {
     "ProductID": "5",
     "ProductTitle": "Витамин 5",
     "ProductPrice": "35",
-    "ProductImage": "images/vitamin1.jpg"
+    "ProductImage": "images/vitamin1.jpg",
+    "ProductDescription":"desc15",
+    "ProductYearlyDosage":"1400",
+    "ProductSideEffects":"нет",
+    "ProductAdditionalInfo":"none",
+    "ProductPillsCount":"80"
   },
   {
     "ProductID": "6",
     "ProductTitle": "Витамин 6",
     "ProductPrice": "15.25",
-    "ProductImage": "images/vitamin1.jpg"
+    "ProductImage": "images/vitamin1.jpg",
+    "ProductDescription":"desc6",
+    "ProductYearlyDosage":"1500",
+    "ProductSideEffects":"нет",
+    "ProductAdditionalInfo":"none",
+    "ProductPillsCount":"115"
   },
   {
     "ProductID": "7",
     "ProductTitle": "Витамин 7",
     "ProductPrice": "25",
-    "ProductImage": "images/vitamin1.jpg"
+    "ProductImage": "images/vitamin1.jpg",
+    "ProductDescription":"desc7",
+    "ProductYearlyDosage":"1600",
+    "ProductSideEffects":"нет",
+    "ProductAdditionalInfo":"none",
+    "ProductPillsCount":"75"
   },
   {
     "ProductID": "8",
     "ProductTitle": "Витамин 8",
     "ProductPrice": "35",
-    "ProductImage": "images/vitamin1.jpg"
+    "ProductImage": "images/vitamin1.jpg",
+    "ProductDescription":"desc8",
+    "ProductYearlyDosage":"1700",
+    "ProductSideEffects":"нет",
+    "ProductAdditionalInfo":"none",
+    "ProductPillsCount":"50"
   },
   {
     "ProductID": "9",
     "ProductTitle": "Витамин 9",
     "ProductPrice": "15.25",
-    "ProductImage": "images/vitamin1.jpg"
+    "ProductImage": "images/vitamin1.jpg",
+    "ProductDescription":"desc9",
+    "ProductYearlyDosage":"1800",
+    "ProductSideEffects":"нет",
+    "ProductAdditionalInfo":"none",
+    "ProductPillsCount":"200"
   },
   {
     "ProductID": "10",
     "ProductTitle": "Витамин 10",
     "ProductPrice": "25",
-    "ProductImage": "images/vitamin1.jpg"
+    "ProductImage": "images/vitamin1.jpg",
+    "ProductDescription":"desc10",
+    "ProductYearlyDosage":"1900",
+    "ProductSideEffects":"нет",
+    "ProductAdditionalInfo":"none",
+    "ProductPillsCount":"125"
   },
   {
     "ProductID": "11",
     "ProductTitle": "Витамин 11",
     "ProductPrice": "35",
-    "ProductImage": "images/vitamin1.jpg"
+    "ProductImage": "images/vitamin1.jpg",
+    "ProductDescription":"desc11",
+    "ProductYearlyDosage":"2000",
+    "ProductSideEffects":"нет",
+    "ProductAdditionalInfo":"none",
+    "ProductPillsCount":"110"
   },
   {
     "ProductID": "12",
     "ProductTitle": "Витамин 12",
     "ProductPrice": "15.25",
-    "ProductImage": "images/vitamin1.jpg"
+    "ProductImage": "images/vitamin1.jpg",
+    "ProductDescription":"desc12",
+    "ProductYearlyDosage":"2100",
+    "ProductSideEffects":"нет",
+    "ProductAdditionalInfo":"none",
+    "ProductPillsCount":"250"
   }
 
 

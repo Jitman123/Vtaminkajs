@@ -101,6 +101,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _services_CartService__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./services/CartService */ "./application/services/CartService.js");
 /* harmony import */ var _directives_LangsOptionDirective__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./directives/LangsOptionDirective */ "./application/directives/LangsOptionDirective.js");
 /* harmony import */ var _directives_ProductDirective__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./directives/ProductDirective */ "./application/directives/ProductDirective.js");
+/* harmony import */ var _directives_AboutUsDirective__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./directives/AboutUsDirective */ "./application/directives/AboutUsDirective.js");
+/* harmony import */ var _directives_CartDirective__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./directives/CartDirective */ "./application/directives/CartDirective.js");
+/* harmony import */ var _directives_SingleProductDirective__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./directives/SingleProductDirective */ "./application/directives/SingleProductDirective.js");
 
 
 //====================CONTROLLERS===========================//
@@ -114,6 +117,9 @@ __webpack_require__.r(__webpack_exports__);
 //====================FILTERS==============================//
 
 //====================DIRECTIVES==============================//
+
+
+
 
 
 
@@ -149,7 +155,7 @@ angular.module('VtaminkaApplication.services')
     .service('ProductService' , [ '$http', 'HOST' , 'GET_PRODUCTS' , _services_ProductService__WEBPACK_IMPORTED_MODULE_2__["default"] ]);
 
 angular.module('VtaminkaApplication.services')
-    .service('CartService' , [ _services_CartService__WEBPACK_IMPORTED_MODULE_3__["default"] ]);
+    .service('CartService' , [ 'localStorageService','ProductService',_services_CartService__WEBPACK_IMPORTED_MODULE_3__["default"] ]);
 
 //====================DIRECTIVES DECLARATIONS===================//
 angular.module('VtaminkaApplication.directives')
@@ -158,6 +164,14 @@ angular.module('VtaminkaApplication.directives')
 angular.module('VtaminkaApplication.directives')
     .directive('productDirective' , [ _directives_ProductDirective__WEBPACK_IMPORTED_MODULE_5__["default"] ]);
 
+angular.module('VtaminkaApplication.directives')
+    .directive('aboutUsDirective' , [ _directives_AboutUsDirective__WEBPACK_IMPORTED_MODULE_6__["default"] ]);
+
+angular.module('VtaminkaApplication.directives')
+    .directive('cartDirective' , [ _directives_CartDirective__WEBPACK_IMPORTED_MODULE_7__["default"] ]);
+
+angular.module('VtaminkaApplication.directives')
+    .directive('singleProductDirective' , [ _directives_SingleProductDirective__WEBPACK_IMPORTED_MODULE_8__["default"] ]);
 
 let app = angular.module('VtaminkaApplication',[
     'angular-loading-bar',
@@ -181,7 +195,7 @@ app.config( [
     '$translateProvider',
     ($stateProvider , $urlRouterProvider , $locationProvider , localStorageServiceProvider , cfpLoadingBarProvider , $translateProvider)=>{
 
-    $locationProvider.html5Mode(true).hashPrefix('!')
+    $locationProvider.html5Mode(true).hashPrefix('!');
 
     $urlRouterProvider.otherwise('/home');
 
@@ -219,6 +233,7 @@ app.config( [
             },
             "footer": {
                 'templateUrl': "templates/footer.html",
+
             }
         },
         'resolve': {
@@ -231,6 +246,103 @@ app.config( [
             }  ]
 
         }
+    });
+
+    $stateProvider.state('about us',{
+        'url':'/about_us',
+        'views':{
+
+            "header":{
+                "templateUrl": "templates/header.html",
+                controller: [ '$scope' , 'CartService' , 'langs' , function ($scope, CartService , langs ){
+                    $scope.langs = langs;
+                    $scope.cart = CartService.getCart();
+                } ]
+            },
+            "content": {
+                'templateUrl': "templates/about_us.html",
+            },
+            "footer": {
+                'templateUrl': "templates/footer.html",
+            }
+
+        },
+        'resolve':{
+
+            'langs':[ 'LocaleService' , function( LocaleService ){
+                return LocaleService.getLangs();
+            } ]
+
+        }
+
+    });
+
+    $stateProvider.state('cart',{
+       'url':'/cart',
+        'views':{
+            "header":{
+                "templateUrl": "templates/header.html",
+                controller: [ '$scope' , 'CartService' , 'langs' , function ($scope, CartService , langs ){
+                    $scope.langs = langs;
+                    $scope.cart = CartService.getCart();
+                } ]
+            },
+            "content": {
+                'templateUrl': "templates/cart.html",
+                controller:['$scope','productList' , function ($scope,productList) {
+                    $scope.products = productList;
+                }]
+            },
+            "footer": {
+                'templateUrl': "templates/footer.html",
+            }
+
+        },
+        'resolve':{
+
+            'langs':[ 'LocaleService' , function( LocaleService ){
+                return LocaleService.getLangs();
+            }],
+            'productList':['CartService',function (CartService) {
+                return CartService.getProducts();
+            }]
+        }
+
+    });
+
+    $stateProvider.state('singleProduct',{
+
+        'url':'/product/:productID',
+        'views':{
+
+            "header":{
+                "templateUrl": "templates/header.html",
+                controller: [ '$scope' , 'CartService' , 'langs' , function ($scope, CartService , langs ){
+                    $scope.langs = langs;
+                    $scope.cart = CartService.getCart();
+                } ]
+            },
+            "content": {
+                'templateUrl': "templates/product.html",
+                controller:['$scope','product' , function ($scope,product) {
+                    $scope.product = product;
+                }]
+            },
+            "footer": {
+                'templateUrl': "templates/footer.html",
+            }
+
+        },
+        'resolve':{
+
+            'langs':[ 'LocaleService' , function( LocaleService ){
+                return LocaleService.getLangs();
+            }],
+            'product':['ProductService','$stateParams',function (ProductService,$stateParams) {
+                return ProductService.getSingleProduct($stateParams.productID);
+            }]
+        }
+
     });
 
 } ] );
@@ -271,6 +383,125 @@ class MainController{
 
 /***/ }),
 
+/***/ "./application/directives/AboutUsDirective.js":
+/*!****************************************************!*\
+  !*** ./application/directives/AboutUsDirective.js ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return AboutUsDirective; });
+
+
+function AboutUsDirective(){
+
+    return{
+
+        restrict:'A',
+        scope:{},
+        templateUrl: 'templates/directives/about-us-directive.html'
+
+    }//return
+
+}
+
+/***/ }),
+
+/***/ "./application/directives/CartDirective.js":
+/*!*************************************************!*\
+  !*** ./application/directives/CartDirective.js ***!
+  \*************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return CartDirective; });
+
+
+function CartDirective(){
+
+    return{
+
+        restrict:'A',
+        scope:{
+            products:'='
+        },
+        templateUrl: 'templates/directives/cart-directive.html',
+        controller: ['$scope' , 'CartService','localStorageService' , function ( $scope , CartService,localStorageService ){
+
+            $scope.cart = CartService.getCart();
+
+            $scope.totalAmount = CountAmount();
+            $scope.totalPrice = CountTotalPrice();
+
+            $scope.SetAmount = function ( index , amount ){
+
+                $scope.cart[index].amount = Math.abs(amount);
+                $scope.products[index].amount = Math.abs(amount);
+
+                $scope.totalAmount = CountAmount();
+                $scope.totalPrice  = CountTotalPrice();
+
+                if( $scope.cart[index].amount === 0 ){
+
+                    $scope.cart.splice( index , 1 );
+                    $scope.products.splice( index , 1 );
+
+                }//if
+
+                localStorageService.set('cart',$scope.cart);
+
+            };
+
+            $scope.RemoveProduct = function ( index ){
+
+                $scope.cart.splice( index , 1 );
+                $scope.products.splice( index , 1 );
+
+                $scope.totalAmount = CountAmount();
+                $scope.totalPrice  = CountTotalPrice();
+
+                localStorageService.set('cart',$scope.cart);
+
+            };
+
+            function CountAmount(){
+
+                let total = 0;
+
+                $scope.products.forEach(function (product) {
+                    total+=Math.abs(product.amount);
+                });
+
+                return total;
+
+            };
+
+            function CountTotalPrice(){
+
+                let total = 0;
+
+                $scope.products.forEach(function (product) {
+                    total += Math.abs(product[0].ProductPrice * product.amount);
+                });
+
+                return total;
+
+            };
+
+
+
+        }]
+
+    }//return
+
+}
+
+/***/ }),
+
 /***/ "./application/directives/LangsOptionDirective.js":
 /*!********************************************************!*\
   !*** ./application/directives/LangsOptionDirective.js ***!
@@ -298,7 +529,6 @@ function LangsOptionDirective( ){
             $scope.currentLang = $scope.langs[0];
             $scope.changeLanguage = function ( newLanguage ){
 
-                console.log(newLanguage);
                 $scope.$parent.updateTranslations( newLanguage );
 
             };
@@ -357,9 +587,9 @@ function ProductDirective( ){
             }
 
             $scope.AddProduct = function ( product ){
-                product.isInCart = true;
+
+                console.log(product);
                 CartService.addProduct( product );
-                console.log( CartService.getCart() )
             }
 
         } ],
@@ -380,6 +610,56 @@ function ProductDirective( ){
 
 /***/ }),
 
+/***/ "./application/directives/SingleProductDirective.js":
+/*!**********************************************************!*\
+  !*** ./application/directives/SingleProductDirective.js ***!
+  \**********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return SingleProductDirective; });
+
+
+function SingleProductDirective(){
+
+    return{
+
+        restrict:'A',
+        scope:{
+            product:'='
+        },
+        templateUrl: 'templates/directives/single-product-directive.html',
+        controller:['$scope','CartService',function ($scope,CartService) {
+
+            $scope.ProductInput = 1;
+            $scope.product.amount = $scope.ProductInput;
+
+            $scope.addProductToCart=function (product) {
+              CartService.addProduct(product);
+            };
+
+            $scope.OnInputChange=function (input) {
+
+                if (!input.match(/^\d+$/) || input <= 0) {
+                    $scope.ProductInput = 1;
+                }//if
+
+                $scope.product.amount = input;
+
+            };
+
+        }]
+
+    }
+
+
+}
+
+
+/***/ }),
+
 /***/ "./application/services/CartService.js":
 /*!*********************************************!*\
   !*** ./application/services/CartService.js ***!
@@ -396,9 +676,17 @@ __webpack_require__.r(__webpack_exports__);
 class CartService{
 
 
-    constructor(){
+    constructor(localStorageService,ProductService){
 
-        this.cart = [];
+        if(localStorageService.get('cart')){
+            this.cart = localStorageService.get('cart');
+        }//if
+        else{
+            this.cart = [];
+        }//else
+
+        this.localStorageService = localStorageService;
+        this._productService = ProductService;
 
     }//constructor
 
@@ -408,9 +696,34 @@ class CartService{
 
     addProduct( product ){
 
+        product.isInCart = true;
+
         this.cart.push( product );
 
+        this.localStorageService.set( 'cart' , this.cart );
+
     }//addProduct
+
+    async getProducts () {
+
+        let products = [];
+
+        for ( let i = 0 ; i < this.cart.length ; i++  ){
+
+            let cartProduct = this.cart[i];
+            let product = await this._productService.getSingleProduct( cartProduct.ProductID || cartProduct[0].ProductID);
+            product.amount = cartProduct.amount;
+
+            products.push( product );
+
+        }//for i
+
+        console.log(products);
+
+        return products;
+
+    }
+
 
 }
 
@@ -504,6 +817,29 @@ class ProductService{
         return products;
 
     }
+
+    async getSingleProduct( productId ){
+
+        try{
+
+            let result = await this._$http.get( `${this._HOST}${this._GET_PRODUCTS}` );
+
+            console.log(result);
+
+            return result.data.filter(function (p) {
+                return p.ProductID == productId;
+            });
+
+        }//try
+        catch(ex){
+
+            console.log("Exception: getSingleProduct: " , ex);
+            return null;
+
+        }//catch
+
+    }
+
 
 }
 

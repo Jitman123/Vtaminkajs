@@ -27,4 +27,27 @@ export default class ProductService{
 
     }
 
+    async getSingleProduct( productId ){
+
+        try{
+
+            let result = await this._$http.get( `${this._HOST}${this._GET_PRODUCTS}` );
+
+            console.log(result);
+
+            return result.data.filter(function (p) {
+                return p.ProductID == productId;
+            });
+
+        }//try
+        catch(ex){
+
+            console.log("Exception: getSingleProduct: " , ex);
+            return null;
+
+        }//catch
+
+    }
+
+
 }

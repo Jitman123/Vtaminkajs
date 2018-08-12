@@ -30,5 +30,8 @@
   "bugs": {
     "url": "https://github.com/ovsyanikov94/Vtaminka/issues"
   },
-  "homepage": "https://github.com/ovsyanikov94/Vtaminka.git#readme"
+  "homepage": "https://github.com/ovsyanikov94/Vtaminka.git#readme",
+  "dependencies": {
+    "npm": "^6.3.0"
+  }
 }

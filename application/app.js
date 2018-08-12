@@ -13,6 +13,9 @@ import CartService from './services/CartService';
 //====================DIRECTIVES==============================//
 import LangsOptionDirective from './directives/LangsOptionDirective';
 import ProductDirective from './directives/ProductDirective';
+import AboutUsDirective from "./directives/AboutUsDirective";
+import CartDirective from "./directives/CartDirective";
+import SingleProductDirective from "./directives/SingleProductDirective";
 
 angular.module('VtaminkaApplication.controllers' , []);
 angular.module('VtaminkaApplication.services' , []);
@@ -46,7 +49,7 @@ angular.module('VtaminkaApplication.services')
     .service('ProductService' , [ '$http', 'HOST' , 'GET_PRODUCTS' , ProductService ]);
 
 angular.module('VtaminkaApplication.services')
-    .service('CartService' , [ CartService ]);
+    .service('CartService' , [ 'localStorageService','ProductService',CartService ]);
 
 //====================DIRECTIVES DECLARATIONS===================//
 angular.module('VtaminkaApplication.directives')
@@ -55,6 +58,14 @@ angular.module('VtaminkaApplication.directives')
 angular.module('VtaminkaApplication.directives')
     .directive('productDirective' , [ ProductDirective ]);
 
+angular.module('VtaminkaApplication.directives')
+    .directive('aboutUsDirective' , [ AboutUsDirective ]);
+
+angular.module('VtaminkaApplication.directives')
+    .directive('cartDirective' , [ CartDirective ]);
+
+angular.module('VtaminkaApplication.directives')
+    .directive('singleProductDirective' , [ SingleProductDirective ]);
 
 let app = angular.module('VtaminkaApplication',[
     'angular-loading-bar',
@@ -78,7 +89,7 @@ app.config( [
     '$translateProvider',
     ($stateProvider , $urlRouterProvider , $locationProvider , localStorageServiceProvider , cfpLoadingBarProvider , $translateProvider)=>{
 
-    $locationProvider.html5Mode(true).hashPrefix('!')
+    $locationProvider.html5Mode(true).hashPrefix('!');
 
     $urlRouterProvider.otherwise('/home');
 
@@ -116,6 +127,7 @@ app.config( [
             },
             "footer": {
                 'templateUrl': "templates/footer.html",
+
             }
         },
         'resolve': {
@@ -128,6 +140,103 @@ app.config( [
             }  ]
 
         }
+    });
+
+    $stateProvider.state('about us',{
+        'url':'/about_us',
+        'views':{
+
+            "header":{
+                "templateUrl": "templates/header.html",
+                controller: [ '$scope' , 'CartService' , 'langs' , function ($scope, CartService , langs ){
+                    $scope.langs = langs;
+                    $scope.cart = CartService.getCart();
+                } ]
+            },
+            "content": {
+                'templateUrl': "templates/about_us.html",
+            },
+            "footer": {
+                'templateUrl': "templates/footer.html",
+            }
+
+        },
+        'resolve':{
+
+            'langs':[ 'LocaleService' , function( LocaleService ){
+                return LocaleService.getLangs();
+            } ]
+
+        }
+
+    });
+
+    $stateProvider.state('cart',{
+       'url':'/cart',
+        'views':{
+            "header":{
+                "templateUrl": "templates/header.html",
+                controller: [ '$scope' , 'CartService' , 'langs' , function ($scope, CartService , langs ){
+                    $scope.langs = langs;
+                    $scope.cart = CartService.getCart();
+                } ]
+            },
+            "content": {
+                'templateUrl': "templates/cart.html",
+                controller:['$scope','productList' , function ($scope,productList) {
+                    $scope.products = productList;
+                }]
+            },
+            "footer": {
+                'templateUrl': "templates/footer.html",
+            }
+
+        },
+        'resolve':{
+
+            'langs':[ 'LocaleService' , function( LocaleService ){
+                return LocaleService.getLangs();
+            }],
+            'productList':['CartService',function (CartService) {
+                return CartService.getProducts();
+            }]
+        }
+
+    });
+
+    $stateProvider.state('singleProduct',{
+
+        'url':'/product/:productID',
+        'views':{
+
+            "header":{
+                "templateUrl": "templates/header.html",
+                controller: [ '$scope' , 'CartService' , 'langs' , function ($scope, CartService , langs ){
+                    $scope.langs = langs;
+                    $scope.cart = CartService.getCart();
+                } ]
+            },
+            "content": {
+                'templateUrl': "templates/product.html",
+                controller:['$scope','product' , function ($scope,product) {
+                    $scope.product = product;
+                }]
+            },
+            "footer": {
+                'templateUrl': "templates/footer.html",
+            }
+
+        },
+        'resolve':{
+
+            'langs':[ 'LocaleService' , function( LocaleService ){
+                return LocaleService.getLangs();
+            }],
+            'product':['ProductService','$stateParams',function (ProductService,$stateParams) {
+                return ProductService.getSingleProduct($stateParams.productID);
+            }]
+        }
+
     });
 
 } ] );

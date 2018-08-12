@@ -15,7 +15,6 @@ export default function LangsOptionDirective( ){
             $scope.currentLang = $scope.langs[0];
             $scope.changeLanguage = function ( newLanguage ){
 
-                console.log(newLanguage);
                 $scope.$parent.updateTranslations( newLanguage );
 
             };

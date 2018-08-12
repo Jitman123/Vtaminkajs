@@ -17,9 +17,9 @@ export default  function ProductDirective( ){
             }
 
             $scope.AddProduct = function ( product ){
-                product.isInCart = true;
+
+                console.log(product);
                 CartService.addProduct( product );
-                console.log( CartService.getCart() )
             }
 
         } ],

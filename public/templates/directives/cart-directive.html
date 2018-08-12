@@ -1,10 +1,54 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+<figure>
+    <div class="bannerSlim" style="background-image: url('images/banner.png'); background-position-y: 55%;">
+        <div class="bannerWrap"></div>
+        <h2 translate>CART_CART_URL</h2>
+    </div>
+    <div class="wrapper clearfix">
+        <div class="breadCrumbs">
+            <a ng-href="home" translate>LAYOUT_MAIN_LINK</a>
+            <div class="delimeter"></div>
+            <a href="" translate>CART_CART_URL</a>
+        </div>
+        <div ng-repeat="product in products" class="clearfix productCartRow">
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 productImg cartCol">
+                <img ng-src="{{product[0].ProductImage}}" alt="">
+            </div>
+            <div class=" col-lg-6 col-md-6 col-sm-6 col-xs-12 productCartText cartCol">
+
+                <div class="productBlock">
+                    <h3 translate>CART_PRODUCT_NAME</h3>
+                    <p class="text-justify"ui-sref="singlePhone({'productID':ProductID})" ng-bind="product[0].ProductTitle"></p>
+                </div>
+
+            </div>
+            <div translate ng-bind-template="{{ 'CART_PRICE' | translate}} : {{product[0].ProductPrice}} $" class="text-center col-lg-1 col-md-1 col-sm-1 col-xs-12 productCartText cartCol">
+
+            </div>
+            <div class="text-center col-lg-1 col-md-1 col-sm-1 col-xs-12 productCartText cartCol">
+                <input ng-change=SetAmount($index,product.amount) ng-model="product.amount" class="input">
+            </div>
+            <div translate ng-bind-template="{{ 'CART_PRICE' | translate}} : {{product[0].ProductPrice * product.amount}} $" class="text-center col-lg-1 col-md-1 col-sm-1 col-xs-12 productCartText cartCol">
+
+            </div>
+            <div  translate ng-click="RemoveProduct($index)" href="#" class="text-center col-lg-1 col-md-1 col-sm-1 col-xs-12 btn-danger productCartText cartCol ">
+               CART_REMOVE
+            </div>
+
+    </div>
+    <div  ng-show="products.length!=0" class="clearfix">
+
+            <div translate class="clearfix productCartRow cartAllCount">
+
+            </div>
+            <div translate ng-bind-template="{{ 'CART_TOTAL_AMOUNT' | translate}} {{totalAmount}} "  class="text-center col-lg-1 col-md-1 col-sm-1 col-xs-12 productCartText cartCol">
+
+            </div>
+            <div translate ng-bind-template="{{ 'CART_TOTAL_PRICE' | translate}} {{totalPrice}}$ " class="text-center col-lg-1 col-md-1 col-sm-1 col-xs-12 productCartText cartCol">
+
+            </div>
+            <div class="text-center empty col-lg-1 col-md-1 col-sm-1 col-xs-12 productCartText cartCol">
+                <!--                            X-->
+            </div>
+        </div>
+
+</figure>
